@@ -1,6 +1,6 @@
 import { login, register } from "@/services/authService";
 import { LoginProps, RegisterProps, UseAuthReturn, User } from "@/types/authType";
-import { useRouter } from "next/router";
+import { useRouter } from "next/navigation";
 import { useState } from "react";
 
 export function useAuth(): UseAuthReturn {
