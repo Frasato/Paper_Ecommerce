@@ -1,6 +1,23 @@
+"use client"
+import { useAuth } from "@/hooks/useAuth";
 import "@/styles/login.module.scss";
+import { LoginProps } from "@/types/authType";
+import React, { useState } from "react";
 
 export default function Login(){
+  
+  const { isLoading, loginUser } = useAuth();
+  const [email, setEmail] = useState<string>('');
+  const [password, setPassword] = useState<string>('');
+
+  const login = async () => {
+    const request: LoginProps = {
+      email: email,
+      password: password
+    }
+    await loginUser(request);
+  }
+
   return(
     <main>
       <div>
@@ -8,12 +25,17 @@ export default function Login(){
           <h1>Olá, bem-vindo de volta</h1>
           <h2>A nossa papelaria</h2>
         </div>
-        <form>
+        <form onSubmit={(e) => {e.preventDefault(); login()}}>
           <label>Email</label>
-          <input type="text"/>
+          <input type="text" onChange={(e) => setEmail(e.target.value)} />
           <label>Senha</label>
-          <input type="password"/>
+          <input type="password" onChange={(e) => setPassword(e.target.value)} />
+          {
+          isLoading? 
+          <div></div>
+          :
           <button type="submit">Entrar</button>
+          }
         </form>
       </div>
     </main>
