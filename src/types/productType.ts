@@ -16,5 +16,7 @@ export interface useProductProps{
     error: string | null;
     allProducts: () => Promise<void>;
     productsById: (id: string) => Promise<void>;
+    byCategory: (category: string) => Promise<void>;
+    morePurchase: () => Promise<void>;
     clearError: () => void;
 }
