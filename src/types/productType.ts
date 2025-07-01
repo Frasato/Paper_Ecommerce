@@ -9,3 +9,12 @@ export interface Product{
     priceWithDiscount: number;
     category: string;
 }
+
+export interface useProductProps{
+    product: Product | null;
+    isLoading: boolean;
+    error: string | null;
+    allProducts: () => Promise<void>;
+    productsById: (id: string) => Promise<void>;
+    clearError: () => void;
+}
