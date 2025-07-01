@@ -1,10 +1,12 @@
-import { getAllProducts, getProductById } from "@/services/productService";
+import { getAllProducts, getProductByCategory, getProductById, getPurchaseProducts } from "@/services/productService";
 import { Product } from "@/types/productType";
 import { useState } from "react";
 
 export function useProducts(){
     const [product, setProduct] = useState<Product | null>(null);
     const [productsList, setProductList] = useState<Product[] | null>(null);
+    const [categoryProducts, setCategoryProducts] = useState<Product[] | null>(null);
+    const [purchaseProducts, setPurchaseProducts] = useState<Product[] | null>(null);
     const [isLoading, setIsLoading] = useState<boolean>(false);
     const [error, setError] = useState<string | null>(null);
 
@@ -36,6 +38,34 @@ export function useProducts(){
         }
     }
 
+    const productsByCategory = async (category: string) =>{
+        setIsLoading(true);
+        setError(null);
+
+        try{
+            const productsFound = await getProductByCategory(category);
+            setCategoryProducts(productsFound);
+        }catch(err){
+            setError(`Error on get product on category: ${category} | ${err}`);
+        }finally{
+            setIsLoading(false);
+        }
+    }
+
+    const productsByPurchase = async () =>{
+        setIsLoading(true);
+        setError(null);
+
+        try{
+            const productsFound = await getPurchaseProducts();
+            setPurchaseProducts(productsFound);
+        }catch(err){
+            setError(`Error on get products purchase | ${err}`);
+        }finally{
+            setIsLoading(false);
+        }
+    }
+
     const clearError = () =>{
         setError(null);
     }
@@ -44,7 +74,11 @@ export function useProducts(){
         isLoading,
         product,
         productsList,
+        categoryProducts,
+        purchaseProducts,
         error,
+        productsByCategory,
+        productsByPurchase,
         allProducts,
         productById,
         clearError
