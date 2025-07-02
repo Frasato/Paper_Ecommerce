@@ -12,11 +12,14 @@ export interface Product{
 
 export interface useProductProps{
     product: Product | null;
+    productsList: Product[] | null;
+    categoryProducts: Product[] | null;
+    purchaseProducts: Product[] | null;
     isLoading: boolean;
     error: string | null;
     allProducts: () => Promise<void>;
-    productsById: (id: string) => Promise<void>;
-    byCategory: (category: string) => Promise<void>;
-    morePurchase: () => Promise<void>;
+    productById: (id: string) => Promise<void>;
+    productsByCategory: (category: string) => Promise<void>;
+    productsByPurchase: () => Promise<void>;
     clearError: () => void;
 }
