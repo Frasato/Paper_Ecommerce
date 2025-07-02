@@ -1,8 +1,8 @@
 import { getAllProducts, getProductByCategory, getProductById, getPurchaseProducts } from "@/services/productService";
-import { Product } from "@/types/productType";
+import { Product, useProductProps } from "@/types/productType";
 import { useState } from "react";
 
-export function useProducts(){
+export function useProducts(): useProductProps{
     const [product, setProduct] = useState<Product | null>(null);
     const [productsList, setProductList] = useState<Product[] | null>(null);
     const [categoryProducts, setCategoryProducts] = useState<Product[] | null>(null);
