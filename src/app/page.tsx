@@ -1,8 +1,10 @@
 "use client"
+import AuthFormFields from "@/components/authFormFields";
 import { useAuth } from "@/hooks/useAuth";
-import "@/styles/login.module.scss";
 import { LoginProps } from "@/types/authType";
 import React, { useState } from "react";
+import { MdEmail } from "react-icons/md";
+import { FaLock } from "react-icons/fa";
 
 export default function Login(){
   
@@ -26,13 +28,11 @@ export default function Login(){
           <h2>A nossa papelaria</h2>
         </div>
         <form onSubmit={(e) => {e.preventDefault(); login()}}>
-          <label>Email</label>
-          <input type="text" onChange={(e) => setEmail(e.target.value)} />
-          <label>Senha</label>
-          <input type="password" onChange={(e) => setPassword(e.target.value)} />
+          <AuthFormFields icon={MdEmail} label="Email" value={email} type="text" onChange={(e) => setEmail(e.target.value)} />
+          <AuthFormFields icon={FaLock} label="Senha" value={password} type="password" onChange={(e) => setPassword(e.target.value)} />
           {
           isLoading? 
-          <div></div>
+          <div><div/></div>
           :
           <button type="submit">Entrar</button>
           }
