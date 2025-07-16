@@ -1,0 +1,119 @@
+@use "./abstracts/variables" as var;
+@use "./abstracts/mixins" as mix;
+
+.login-container {
+  @include mix.flex-center;
+  min-height: 100vh;
+  background-color: var.$primary-black;
+  padding: var.$spacing-lg;
+  font-family: 'Helvetica Neue', Arial, sans-serif;
+  
+  .login-card {
+    width: 100%;
+    max-width: 400px;
+    background: var.$white;
+    padding: var.$spacing-xl;
+    border-radius: var.$border-radius-md;
+    @include mix.epic-shadow;
+    
+    .login-header {
+      margin-bottom: var.$spacing-xl;
+      text-align: center;
+      
+      .login-title {
+        font-size: 1.8rem;
+        font-weight: 700;
+        color: var.$primary-black;
+        margin-bottom: var.$spacing-xs;
+        letter-spacing: -0.5px;
+      }
+      
+      .login-subtitle {
+        font-size: 1.2rem;
+        font-weight: 400;
+        color: var.$dark-gray;
+        position: relative;
+        display: inline-block;
+        
+        &::after {
+          content: '';
+          position: absolute;
+          bottom: -8px;
+          left: 50%;
+          transform: translateX(-50%);
+          width: 50px;
+          height: 3px;
+          background: var.$primary-yellow;
+        }
+      }
+    }
+    
+    .login-form {
+      display: flex;
+      flex-direction: column;
+      gap: var.$spacing-md;
+      
+      .login-button {
+        background: var.$primary-yellow;
+        color: var.$primary-black;
+        border: none;
+        padding: var.$spacing-sm;
+        font-size: 1rem;
+        font-weight: 600;
+        border-radius: var.$border-radius-sm;
+        cursor: pointer;
+        transition: all 0.3s ease;
+        text-transform: uppercase;
+        letter-spacing: 1px;
+        @include mix.epic-shadow;
+        
+        &:hover {
+          background: lighten(var.$secondary-yellow, 10%);
+          transform: translateY(-2px);
+        }
+        
+        &:active {
+          transform: translateY(0);
+        }
+      }
+      
+      .login-loader {
+        @include mix.flex-center;
+        height: 48px;
+        
+        .loader-spinner {
+          width: 24px;
+          height: 24px;
+          border: 3px solid var.$primary-yellow;
+          border-top-color: transparent;
+          border-radius: 50%;
+          animation: spin 1s linear infinite;
+        }
+      }
+    }
+
+    .to-register-container{
+      padding: var.$spacing-md;
+
+      .to-register-button{
+        background-color: white;
+
+        .to-register-click-here{
+          text-decoration: underline;
+          color: var.$primary-yellow;
+
+          &:hover{
+            cursor: pointer;
+            color: var.$secondary-yellow;
+          }
+        }
+      }
+    }
+  }
+}
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
