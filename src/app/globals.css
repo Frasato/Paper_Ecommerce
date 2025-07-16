@@ -10,3 +10,5 @@
   box-sizing: border-box;
   vertical-align: baseline;
 }
+
+button:hover{cursor: pointer;}
