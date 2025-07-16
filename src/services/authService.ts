@@ -28,13 +28,7 @@ export async function register(register: RegisterProps): Promise<boolean>{
         register.email == '' ||
         register.password == '' ||
         register.cpf == '' ||
-        register.phone == '' ||
-        register.street == '' ||
-        register.cep == '' ||
-        register.number == '' ||
-        register.district == '' ||
-        register.countryState == '' ||
-        register.city == ''
+        register.phone == ''
     ) throw new Error("Can't register with empty informations!");
 
     const response = await fetch(`${process.env.URL_API}/auth/register`, {
@@ -46,12 +40,6 @@ export async function register(register: RegisterProps): Promise<boolean>{
             email: register.email,
             phone: register.phone,
             cpf: register.cpf,
-            street: register.street,
-            number: register.number,
-            countryState: register.countryState,
-            district: register.district,
-            city: register.city,
-            CEP: register.cep
         })
     });
 

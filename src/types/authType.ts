@@ -15,6 +15,9 @@ export interface RegisterProps{
     email: string;
     phone: string;
     cpf: string;
+}
+
+export interface RegisterAddress{
     street: string;
     number: string;
     countryState: string;
