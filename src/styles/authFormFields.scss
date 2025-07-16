@@ -1,0 +1,44 @@
+@use "./abstracts/variables" as var;
+@use "./abstracts/mixins" as mix;
+
+.auth-form-field {
+  position: relative;
+  margin-bottom: var.$spacing-xs;
+  
+  .auth-field-label {
+    display: block;
+    margin-bottom: var.$spacing-xs;
+    font-size: 0.9rem;
+    color: var.$dark-gray;
+    font-weight: 500;
+  }
+  
+  .auth-field-container {
+    position: relative;
+    
+    .auth-field-icon {
+      position: absolute;
+      left: 12px;
+      top: 50%;
+      transform: translateY(-50%);
+      color: var.$dark-gray;
+    }
+    
+    .auth-field-input {
+      width: 100%;
+      padding: var.$spacing-sm var.$spacing-sm var.$spacing-sm 40px;
+      border: 1px solid darken(var.$light-gray, 10%);
+      border-radius: var.$border-radius-sm;
+      font-size: 1rem;
+      transition: all 0.3s ease;
+      
+      &:focus {
+        @include mix.input-focus-style;
+      }
+      
+      &::placeholder {
+        color: lighten(var.$dark-gray, 40%);
+      }
+    }
+  }
+}
