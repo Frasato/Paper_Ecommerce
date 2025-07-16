@@ -2,12 +2,21 @@ export interface Product{
     id: string;
     image: string;
     barCode: string;
+    name: string;
     description: string;
     producer: string;
     price: number;
     discount: number;
     priceWithDiscount: number;
     category: string;
+}
+
+export interface ProductProps{
+    image: string;
+    name: string;
+    description: string;
+    price: number;
+    priceWithDiscount: number;
 }
 
 export interface useProductProps{
