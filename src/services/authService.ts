@@ -4,7 +4,7 @@ export async function login(login: LoginProps): Promise<User>{
 
     if(login.email == '' || login.password == '') throw new Error("Can't loggin with empty information!");
 
-    const response = await fetch(`${process.env.URL_API}/auth/login`, {
+    const response = await fetch(`${process.env.NEXT_PUBLIC_URL_API}/auth/login`, {
         method: "POST",
         headers: {"Content-Type": "application/json"},
         body: JSON.stringify({
@@ -31,7 +31,7 @@ export async function register(register: RegisterProps): Promise<boolean>{
         register.phone == ''
     ) throw new Error("Can't register with empty informations!");
 
-    const response = await fetch(`${process.env.URL_API}/auth/register`, {
+    const response = await fetch(`${process.env.NEXT_PUBLIC_URL_API}/auth/register`, {
         method: "POST",
         headers: {"Content-Type": "application/json"},
         body: JSON.stringify({
