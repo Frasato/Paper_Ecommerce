@@ -28,7 +28,7 @@ export async function getProductById(id: string, token: string): Promise<Product
 
     if(response.ok){
         const data = await response.json();
-        return data;
+        return data.product;
     }
 
     throw new Error(`Product not found on id: ${id}`);
