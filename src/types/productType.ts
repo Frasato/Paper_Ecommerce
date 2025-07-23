@@ -4,6 +4,10 @@ export interface Product{
     barCode: string;
     name: string;
     description: string;
+    height: string;
+    width: string;
+    product_length: string;
+    weight: string;
     producer: string;
     price: number;
     discount: number;
@@ -26,9 +30,9 @@ export interface useProductProps{
     purchaseProducts: Product[] | null;
     isLoading: boolean;
     error: string | null;
-    allProducts: () => Promise<void>;
-    productById: (id: string) => Promise<void>;
-    productsByCategory: (category: string) => Promise<void>;
-    productsByPurchase: () => Promise<void>;
+    allProducts: (token: string) => Promise<void>;
+    productById: (id: string, token: string) => Promise<void>;
+    productsByCategory: (category: string, token: string) => Promise<void>;
+    productsByPurchase: (token: string) => Promise<void>;
     clearError: () => void;
 }
