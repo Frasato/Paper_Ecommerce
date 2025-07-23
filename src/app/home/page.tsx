@@ -7,6 +7,7 @@ import { useEffect } from "react";
 import banner from "@/assets/banner.jpg";
 import Image from "next/image";
 import "@/styles/home.scss";
+import Link from "next/link";
 
 export default function Home() {
     const { purchaseProducts, productsList, allProducts, productsByPurchase, isLoading } = useProducts();
@@ -52,10 +53,11 @@ export default function Home() {
                     <h2 className="section-title">Todos os produtos</h2>
                     <div className="products-grid">
                         {productsList && productsList?.length > 0 && productsList?.map((product, index) => (
-                            <ProductCard 
-                                key={index}
-                                {...product}
-                            />
+                            <Link href={`/home/${product.id}`} key={index}>
+                                <ProductCard 
+                                    {...product}
+                                />
+                            </Link>
                         ))}
                     </div>
                 </section>
