@@ -21,6 +21,7 @@ export default function Login(){
       password: password
     }
     await loginUser(request);
+    router.push('/home');
   }
 
   return(
