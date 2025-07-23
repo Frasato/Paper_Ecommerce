@@ -1,18 +1,42 @@
 import { ProductProps } from "@/types/productType";
-import Image from "next/image";
 import { FaCartPlus } from "react-icons/fa";
+import "@/styles/productCard.scss";
 
 export default function ProductCard(props: ProductProps) {
+    const hasDiscount = props.priceWithDiscount > 0;
+    
     return (
-        <div>
-            <Image src={props.image} alt={props.name}/>
-            <h1>{props.name}</h1>
-            <p>{props.description.length > 13? props.description.slice(0, 13) + "..." : props.description}</p>
-            <div>
-                <h2>{props.priceWithDiscount > 0? (props.priceWithDiscount / 100).toFixed(2) : (props.price / 100).toFixed(2)}</h2>
-                <button><FaCartPlus /></button>
+        <div className="product-card">
+            <div className="product-image-container">
+                <img 
+                    className="product-image" 
+                    src={props.image} 
+                    alt={props.name}
+                />
+            </div>
+            <div className="product-content">
+                <h3 className="product-name">{props.name}</h3>
+                <p className="product-description">
+                    {props.description.length > 100 
+                        ? `${props.description.slice(0, 100)}...` 
+                        : props.description}
+                </p>
+                <div className="product-footer">
+                    <div>
+                        {hasDiscount && (
+                            <span className="product-price original-price">
+                                R$ {(props.price / 100).toFixed(2)}
+                            </span>
+                        )}
+                        <span className={`product-price ${hasDiscount ? 'discounted' : ''}`}>
+                            R$ {hasDiscount ? (props.priceWithDiscount / 100).toFixed(2) : (props.price / 100).toFixed(2)}
+                        </span>
+                    </div>
+                    <button className="add-to-cart">
+                        <FaCartPlus />
+                    </button>
+                </div>
             </div>
         </div>
     );
-
 }
