@@ -1,6 +1,4 @@
-import { User } from "@/types/authType";
-
-export function getLocalStorage(): User{
+export function getLocalStorageToken(): string{
     const localUser = localStorage.getItem('user');
 
     if(!localUser){
@@ -8,5 +6,16 @@ export function getLocalStorage(): User{
     }
 
     const user = JSON.parse(localUser);
-    return user;
+    return user.token;
+}
+
+export function getLocalStorageUserId(): string{
+    const localUser = localStorage.getItem('user');
+
+    if(!localUser){
+        throw new Error("User not found!");
+    }
+
+    const user = JSON.parse(localUser);
+    return user.userId;
 }
