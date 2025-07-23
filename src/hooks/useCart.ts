@@ -7,12 +7,12 @@ export function useCart(){
     const [isLoading, setIsLoading] = useState<boolean>(false);
     const [error, setError] = useState<string | null>(null);
 
-    const getCart = async () => {
+    const getCart = async (userId: string, token: string) => {
         setIsLoading(true);
         setError(null);
 
         try{
-            const response = await getUserCart();
+            const response = await getUserCart(userId, token);
             setCart(response);
         }catch(err){
             setError(`Failed to load cart for user | ${err}`);
@@ -21,12 +21,12 @@ export function useCart(){
         }
     }
 
-    const addItem = async (productId: string) =>{
+    const addItem = async (productId: string, userId: string, token: string) =>{
         setIsLoading(true);
         setError(null);
 
         try{
-            await addItemOnCart(productId);
+            await addItemOnCart(productId, userId, token);
         }catch(err){
             setError(`Failed to add item to cart, product id: ${productId} | ${err}`);
         }finally{
@@ -34,12 +34,12 @@ export function useCart(){
         }
     }
 
-    const plusOne = async (cartItemId: string) =>{
+    const plusOne = async (cartItemId: string, token: string) =>{
         setIsLoading(true);
         setError(null);
 
         try{
-            await plusOneOnItem(cartItemId);
+            await plusOneOnItem(cartItemId, token);
         }catch(err){
             setError(`Failed to plus one to cart item: ${cartItemId} | ${err}`);
         }finally{
@@ -47,12 +47,12 @@ export function useCart(){
         }
     }
     
-    const minusOne = async (cartItemId: string) =>{
+    const minusOne = async (cartItemId: string, token: string) =>{
         setIsLoading(true);
         setError(null);
 
         try{
-            await minusOneOnItem(cartItemId);
+            await minusOneOnItem(cartItemId, token);
         }catch(err){
             setError(`Failed to minus one to cart item: ${cartItemId} | ${err}`);
         }finally{
@@ -60,12 +60,12 @@ export function useCart(){
         }
     }
     
-    const removeItem = async (cartItemId: string) =>{
+    const removeItem = async (cartItemId: string, token: string) =>{
         setIsLoading(true);
         setError(null);
 
         try{
-            await removeItemCart(cartItemId);
+            await removeItemCart(cartItemId, token);
         }catch(err){
             setError(`Failed to remove cart item: ${cartItemId} | ${err}`);
         }finally{
@@ -73,12 +73,12 @@ export function useCart(){
         }
     }
     
-    const clearUserCart = async (cartId: string) =>{
+    const clearUserCart = async (cartId: string, token: string) =>{
         setIsLoading(true);
         setError(null);
 
         try{
-            await clearCart(cartId);
+            await clearCart(cartId, token);
         }catch(err){
             setError(`Failed to clear cart: ${cartId} | ${err}`);
         }finally{

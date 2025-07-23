@@ -1,14 +1,11 @@
 import { Cart } from "@/types/cartType";
-import { getLocalStorage } from "@/utils/getLocalStorage";
 
-const localUser = getLocalStorage();
-
-export async function getUserCart(): Promise<Cart>{
-    const response = await fetch(`${process.env.API_URL}/cart/${localUser.userId}`, {
+export async function getUserCart(userId: string, token: string): Promise<Cart>{
+    const response = await fetch(`${process.env.API_URL}/cart/${userId}`, {
         method: "GET",
         headers: {
             'Content-Type':"application/json",
-            "Authorization":`Bearer ${localUser.token}`
+            "Authorization":`Bearer ${token}`
         }
     });
 
@@ -17,19 +14,19 @@ export async function getUserCart(): Promise<Cart>{
         return data;
     }
 
-    throw new Error(`Failed to load cart by user with id: ${localUser.userId}`)
+    throw new Error(`Failed to load cart by user with id: ${userId}`)
 }
 
-export async function addItemOnCart(productId: string){
+export async function addItemOnCart(productId: string, userId: string, token: string){
     try{
         await fetch(`${process.env.API_URL}/cart`, {
             method: "POST",
             headers: {
                 "Content-Type":"application/json",
-                "Authorization":`Bearer ${localUser.token}`
+                "Authorization":`Bearer ${token}`
             },
             body: JSON.stringify({
-                userId: localUser.userId,
+                userId: userId,
                 productId: productId
             })
         });
@@ -38,13 +35,13 @@ export async function addItemOnCart(productId: string){
     }
 }
 
-export async function plusOneOnItem(cartItemId: string){
+export async function plusOneOnItem(cartItemId: string, token: string){
     try{
         await fetch(`${process.env.API_URL}/cart/plus/${cartItemId}`, {
             method: "PUT",
             headers: {
                 "Content-Type":"application/json",
-                "Authorization":`Bearer ${localUser.token}`
+                "Authorization":`Bearer ${token}`
             },
         });
     }catch(err){
@@ -52,13 +49,13 @@ export async function plusOneOnItem(cartItemId: string){
     }
 }
 
-export async function minusOneOnItem(cartItemId: string){
+export async function minusOneOnItem(cartItemId: string, token: string){
     try{
         await fetch(`${process.env.API_URL}/cart/minus/${cartItemId}`, {
             method: "PUT",
             headers: {
                 "Content-Type":"application/json",
-                "Authorization":`Bearer ${localUser.token}`
+                "Authorization":`Bearer ${token}`
             },
         });
     }catch(err){
@@ -66,13 +63,13 @@ export async function minusOneOnItem(cartItemId: string){
     }
 }
 
-export async function removeItemCart(cartItemId: string){
+export async function removeItemCart(cartItemId: string, token: string){
     try{
         await fetch(`${process.env.API_URL}/cart/${cartItemId}`, {
             method: "PUT",
             headers: {
                 "Content-Type":"application/json",
-                "Authorization":`Bearer ${localUser.token}`
+                "Authorization":`Bearer ${token}`
             },
         });
     }catch(err){
@@ -80,13 +77,13 @@ export async function removeItemCart(cartItemId: string){
     }
 }
 
-export async function clearCart(cartId: string){
+export async function clearCart(cartId: string, token: string){
     try{
         await fetch(`${process.env.API_URL}/cart/clear/${cartId}`, {
             method: "PUT",
             headers: {
                 "Content-Type":"application/json",
-                "Authorization":`Bearer ${localUser.token}`
+                "Authorization":`Bearer ${token}`
             },
         });
     }catch(err){
