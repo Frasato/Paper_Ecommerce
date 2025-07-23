@@ -34,7 +34,7 @@ export function useProducts(): useProductProps{
         }catch(err){
             setError(`Error on get product on id: ${id} | ${err}`);
         }finally{
-            setIsLoading(true);
+            setIsLoading(false);
         }
     }
 
