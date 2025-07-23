@@ -1,0 +1,53 @@
+@use "./abstracts/variables" as var;
+@use "./abstracts/mixins" as mix;
+
+.home-page {
+  padding: var.$spacing-lg;
+  max-width: 1400px;
+  margin: 0 auto;
+
+  .banner {
+    width: 100%;
+    height: 300px;
+    object-fit: cover;
+    border-radius: var.$border-radius-md;
+    margin-bottom: var.$spacing-xl;
+    box-shadow: var.$shadow-md;
+  }
+
+  .section {
+    margin-bottom: var.$spacing-xl;
+
+    .section-title {
+      font-size: 1.5rem;
+      color: var.$primary-black;
+      margin-bottom: var.$spacing-md;
+      position: relative;
+      padding-bottom: var.$spacing-xs;
+
+      &::after {
+        content: '';
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        width: 50px;
+        height: 2px;
+        background: var.$primary-yellow;
+      }
+    }
+
+    .products-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+      gap: var.$spacing-md;
+    }
+  }
+
+  @media (max-width: var.$breakpoint-md) {
+    padding: var.$spacing-md;
+
+    .banner {
+      height: 200px;
+    }
+  }
+}
