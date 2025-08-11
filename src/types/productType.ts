@@ -16,11 +16,14 @@ export interface Product{
 }
 
 export interface ProductProps{
+    id: string;
     image: string;
     name: string;
     description: string;
     price: number;
     priceWithDiscount: number;
+    userId: string;
+    token: string;
 }
 
 export interface useProductProps{
