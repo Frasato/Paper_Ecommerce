@@ -1,7 +1,7 @@
 import { Cart } from "@/types/cartType";
 
 export async function getUserCart(userId: string, token: string): Promise<Cart>{
-    const response = await fetch(`${process.env.API_URL}/cart/${userId}`, {
+    const response = await fetch(`${process.env.NEXT_PUBLIC_URL_API}/cart/${userId}`, {
         method: "GET",
         headers: {
             'Content-Type':"application/json",
@@ -19,7 +19,7 @@ export async function getUserCart(userId: string, token: string): Promise<Cart>{
 
 export async function addItemOnCart(productId: string, userId: string, token: string){
     try{
-        await fetch(`${process.env.API_URL}/cart`, {
+        await fetch(`${process.env.NEXT_PUBLIC_URL_API}/cart`, {
             method: "POST",
             headers: {
                 "Content-Type":"application/json",
@@ -37,7 +37,7 @@ export async function addItemOnCart(productId: string, userId: string, token: st
 
 export async function plusOneOnItem(cartItemId: string, token: string){
     try{
-        await fetch(`${process.env.API_URL}/cart/plus/${cartItemId}`, {
+        await fetch(`${process.env.NEXT_PUBLIC_URL_API}/cart/plus/${cartItemId}`, {
             method: "PUT",
             headers: {
                 "Content-Type":"application/json",
@@ -51,7 +51,7 @@ export async function plusOneOnItem(cartItemId: string, token: string){
 
 export async function minusOneOnItem(cartItemId: string, token: string){
     try{
-        await fetch(`${process.env.API_URL}/cart/minus/${cartItemId}`, {
+        await fetch(`${process.env.NEXT_PUBLIC_URL_API}/cart/minus/${cartItemId}`, {
             method: "PUT",
             headers: {
                 "Content-Type":"application/json",
@@ -65,7 +65,7 @@ export async function minusOneOnItem(cartItemId: string, token: string){
 
 export async function removeItemCart(cartItemId: string, token: string){
     try{
-        await fetch(`${process.env.API_URL}/cart/${cartItemId}`, {
+        await fetch(`${process.env.NEXT_PUBLIC_URL_API}/cart/${cartItemId}`, {
             method: "PUT",
             headers: {
                 "Content-Type":"application/json",
@@ -79,7 +79,7 @@ export async function removeItemCart(cartItemId: string, token: string){
 
 export async function clearCart(cartId: string, token: string){
     try{
-        await fetch(`${process.env.API_URL}/cart/clear/${cartId}`, {
+        await fetch(`${process.env.NEXT_PUBLIC_URL_API}/cart/clear/${cartId}`, {
             method: "PUT",
             headers: {
                 "Content-Type":"application/json",
