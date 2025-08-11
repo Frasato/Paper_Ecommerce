@@ -1,19 +1,23 @@
 "use client";
 import Header from "@/components/header";
 import { useProducts } from "@/hooks/useProducts";
-import { getLocalStorageToken } from "@/utils/getLocalStorage";
+import { getLocalStorageToken, getLocalStorageUserId } from "@/utils/getLocalStorage";
 import { use, useEffect } from "react";
 import { FaCartPlus, FaArrowRight } from "react-icons/fa";
 import "@/styles/productPage.scss";
 import Link from "next/link";
 import ProductCard from "@/components/productCard";
+import { useCart } from "@/hooks/useCart";
+
+const token = getLocalStorageToken();
+const userId = getLocalStorageUserId();
 
 export default function ProductPage({ params }: { params: Promise<{ productId: string }> }) { 
     const { productId } = use(params)
     const { productById, product, isLoading, categoryProducts, productsByCategory } = useProducts();
-    
+    const { addItem } = useCart();
+
     useEffect(() => {
-        const token = getLocalStorageToken();
         if(productId){
             void productById(productId, token);
         }
@@ -58,7 +62,7 @@ export default function ProductPage({ params }: { params: Promise<{ productId: s
                                 </div>
                                 
                                 <div className="action-buttons">
-                                    <button className="btn btn-cart">
+                                    <button className="btn btn-cart" onClick={() => addItem(productId, userId, token)}>
                                         <FaCartPlus />
                                         Adicionar ao Carrinho
                                     </button>
@@ -76,8 +80,8 @@ export default function ProductPage({ params }: { params: Promise<{ productId: s
                             ) : categoryProducts && categoryProducts.length > 0 ? (
                                 <div className="products-grid">
                                     {categoryProducts
-                                        .filter(item => item.id !== product.id) // Remove o produto atual da lista
-                                        .slice(0, 4) // Limita a 4 produtos
+                                        .filter(item => item.id !== product.id) 
+                                        .slice(0, 4)
                                         .map((item) => (
                                             <Link href={`/home/${item.id}`} key={item.id}>
                                                 <ProductCard {...item} />
