@@ -2,18 +2,20 @@
 import Header from "@/components/header";
 import ProductCard from "@/components/productCard";
 import { useProducts } from "@/hooks/useProducts";
-import { getLocalStorageToken } from "@/utils/getLocalStorage";
+import { getLocalStorageToken, getLocalStorageUserId } from "@/utils/getLocalStorage";
 import { useEffect } from "react";
 import banner from "@/assets/banner.jpg";
 import Image from "next/image";
 import "@/styles/home.scss";
 import Link from "next/link";
 
+const token = getLocalStorageToken();
+const userId =getLocalStorageUserId();
+
 export default function Home() {
     const { purchaseProducts, productsList, allProducts, productsByPurchase, isLoading } = useProducts();
 
     useEffect(() => {
-        const token = getLocalStorageToken();
         void allProducts(token);
         void productsByPurchase(token);
     }, []);
@@ -41,10 +43,13 @@ export default function Home() {
                     <h2 className="section-title">Produtos mais vendidos!</h2>
                     <div className="products-grid">
                         {purchaseProducts && purchaseProducts?.length > 0 && purchaseProducts?.map((product, index) => (
-                            <ProductCard 
-                                key={index}
-                                {...product}
-                            />
+                            <Link href={`/home/${product.id}`} key={index}>
+                                <ProductCard
+                                    token={token}
+                                    userId={userId}
+                                    {...product}
+                                />
+                            </Link>
                         ))}
                     </div>
                 </section>
@@ -54,7 +59,9 @@ export default function Home() {
                     <div className="products-grid">
                         {productsList && productsList?.length > 0 && productsList?.map((product, index) => (
                             <Link href={`/home/${product.id}`} key={index}>
-                                <ProductCard 
+                                <ProductCard
+                                    token={token}
+                                    userId={userId}
                                     {...product}
                                 />
                             </Link>
