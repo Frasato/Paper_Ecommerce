@@ -5,61 +5,119 @@ import { IoPersonCircle } from "react-icons/io5";
 import logo from "@/assets/icon.png";
 import Image from "next/image";
 import "@/styles/header.scss";
+import { useCart } from "@/hooks/useCart";
+import { useEffect, useState } from "react";
+import { getLocalStorageToken, getLocalStorageUserId } from "@/utils/getLocalStorage";
+import { TiThMenu } from "react-icons/ti";
 
 export default function Header() {
     const router = useRouter();
+    const { getCart, cart, isLoading } = useCart();
+    const [isMenuOpen, setIsMenuOpen] = useState(false);
+
+    useEffect(() => {
+        const userId = getLocalStorageUserId();
+        const token = getLocalStorageToken();
+
+        void getCart(userId, token);
+    }, []);
+
+    const toggleMenu = () => {
+        setIsMenuOpen(!isMenuOpen);
+    };
 
     return(
-        <header className="header">
-            <nav className="header-nav">
+        <>
+            <header className="header">
                 <button 
-                    className="nav-button" 
+                    className="mobile-menu-toggle"
+                    onClick={toggleMenu}
+                    aria-label="Menu"
+                >
+                    <TiThMenu />
+                </button>
+                
+                <nav className={`header-nav ${isMenuOpen ? 'mobile-open' : ''}`}>
+                    <button 
+                        className="nav-button" 
+                        onClick={() => {
+                            router.push('/home');
+                            setIsMenuOpen(false);
+                        }}
+                    >
+                        Inicio
+                    </button>
+                    <button 
+                        className="nav-button"
+                        onClick={() => {
+                            router.push('/promotions');
+                            setIsMenuOpen(false);
+                        }}
+                    >
+                        Promoções
+                    </button>
+                    <button 
+                        className="nav-button"
+                        onClick={() => {
+                            router.push('/catalogue');
+                            setIsMenuOpen(false);
+                        }}
+                    >
+                        Catálogo
+                    </button>
+                    <button 
+                        className="nav-button"
+                        onClick={() => {
+                            router.push('/orders');
+                            setIsMenuOpen(false);
+                        }}
+                    >
+                        Pedidos
+                    </button>
+                    <button 
+                        className="nav-button"
+                        onClick={() => {
+                            router.push('/');
+                            setIsMenuOpen(false);
+                        }}
+                    >
+                        Sair
+                    </button>
+                </nav>
+                
+                <Image 
+                    className="header-logo" 
+                    src={logo} 
+                    alt="Logo Icon"
                     onClick={() => router.push('/home')}
-                >
-                    Inicio
-                </button>
-                <button 
-                    className="nav-button"
-                    onClick={() => router.push('/promotions')}
-                >
-                    Promoções
-                </button>
-                <button 
-                    className="nav-button"
-                    onClick={() => router.push('/catalogue')}
-                >
-                    Catálogo
-                </button>
-                <button 
-                    className="nav-button"
-                    onClick={() => router.push('/orders')}
-                >
-                    Pedidos
-                </button>
-                <button 
-                    className="nav-button"
-                    onClick={() => router.push('/')}
-                >
-                    Sair
-                </button>
-            </nav>
-            
-            <Image 
-                className="header-logo" 
-                src={logo} 
-                alt="Logo Icon"
-                onClick={() => router.push('/home')}
+                    priority
+                />
+                
+                <div className="header-actions">
+                    <button 
+                        className="action-button" 
+                        onClick={() => router.push('/cart')}
+                        aria-label="Carrinho"
+                    >
+                        <FaShoppingCart />
+                        <span className="cart-count">
+                            {cart? isLoading ? 0 : cart?.cartItem.length > 0? cart?.cartItem.length : 0 : 0}
+                        </span>
+                    </button>
+                    <button 
+                        className="action-button" 
+                        onClick={() => router.push('/profile')}
+                        aria-label="Perfil"
+                    >
+                        <IoPersonCircle />
+                    </button>
+                </div>
+            </header>
+
+            <div 
+                className={`mobile-menu-overlay ${isMenuOpen ? 'visible' : ''}`}
+                onClick={toggleMenu}
             />
-            
-            <div className="header-actions">
-                <button className="action-button" onClick={() => router.push('/cart')}>
-                    <FaShoppingCart />
-                    <span className="cart-count">0</span>
-                </button>
-                <button className="action-button" onClick={() => router.push('/profile')}>
-                    <IoPersonCircle />
-                </button>
-            </div>
-        </header>
-    )
+        </>
+    );
 }
