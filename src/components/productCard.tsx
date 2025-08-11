@@ -1,9 +1,11 @@
 import { ProductProps } from "@/types/productType";
 import { FaCartPlus } from "react-icons/fa";
 import "@/styles/productCard.scss";
+import { useCart } from "@/hooks/useCart";
 
 export default function ProductCard(props: ProductProps) {
     const hasDiscount = props.priceWithDiscount > 0;
+    const { addItem, isLoading } = useCart();
     
     return (
         <div className="product-card">
@@ -32,8 +34,10 @@ export default function ProductCard(props: ProductProps) {
                             R$ {hasDiscount ? (props.priceWithDiscount / 100).toFixed(2) : (props.price / 100).toFixed(2)}
                         </span>
                     </div>
-                    <button className="add-to-cart">
-                        <FaCartPlus />
+                    <button className="add-to-cart" onClick={() => addItem(props.id, props.userId, props.token)}>
+                        {
+                            isLoading? <span>Carregando...</span> : <FaCartPlus />
+                        }
                     </button>
                 </div>
             </div>
