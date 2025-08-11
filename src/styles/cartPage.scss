@@ -1,0 +1,116 @@
+@use "./abstracts/variables" as var;
+@use "./abstracts/mixins" as mix;
+
+.cart-page {
+  padding: var.$spacing-xl;
+  max-width: 1200px;
+  margin: 0 auto;
+
+  .loading-message {
+    @include mix.flex-center;
+    height: 200px;
+    color: var.$dark-gray;
+    font-size: 1.2rem;
+  }
+
+  .empty-cart {
+    @include mix.flex-center;
+    flex-direction: column;
+    height: 300px;
+    text-align: center;
+
+    h1 {
+      color: var.$primary-black;
+      margin-bottom: var.$spacing-md;
+      font-size: 1.8rem;
+    }
+
+    .continue-shopping {
+      margin-top: var.$spacing-lg;
+      padding: var.$spacing-md var.$spacing-lg;
+      background: var.$primary-black;
+      color: var.$primary-yellow;
+      border: none;
+      border-radius: var.$border-radius-md;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      @include mix.epic-shadow;
+
+      &:hover {
+        background: lighten(var.$primary-black, 10%);
+        transform: translateY(-2px);
+      }
+    }
+  }
+
+  .cart-container {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: var.$spacing-xl;
+
+    @media (min-width: var.$breakpoint-lg) {
+      grid-template-columns: 2fr 1fr;
+    }
+  }
+
+  .cart-items {
+    display: flex;
+    flex-direction: column;
+    gap: var.$spacing-md;
+  }
+
+  .cart-summary {
+    background: var.$white;
+    padding: var.$spacing-lg;
+    border-radius: var.$border-radius-lg;
+    @include mix.epic-shadow;
+    height: fit-content;
+    position: sticky;
+    top: var.$spacing-xl;
+
+    .summary-title {
+      font-size: 1.5rem;
+      color: var.$primary-black;
+      margin-bottom: var.$spacing-lg;
+      padding-bottom: var.$spacing-xs;
+      border-bottom: 2px solid var.$primary-yellow;
+    }
+
+    .summary-row {
+      @include mix.flex-between;
+      margin-bottom: var.$spacing-md;
+
+      &.total {
+        font-weight: 700;
+        font-size: 1.2rem;
+        margin-top: var.$spacing-lg;
+        padding-top: var.$spacing-md;
+        border-top: 1px solid rgba(var.$dark-gray, 0.2);
+      }
+    }
+
+    .checkout-button {
+      width: 100%;
+      padding: var.$spacing-md;
+      background: var.$primary-yellow;
+      color: var.$primary-black;
+      border: none;
+      border-radius: var.$border-radius-md;
+      font-weight: 700;
+      font-size: 1.1rem;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      margin-top: var.$spacing-lg;
+      text-transform: uppercase;
+      @include mix.epic-shadow;
+
+      &:hover {
+        background: darken(var.$primary-yellow, 10%);
+        transform: translateY(-2px);
+      }
+    }
+  }
+}
