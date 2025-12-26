@@ -1,4 +1,6 @@
-export async function calculateDelivery(userId:string, token: string){
+import { Delivery } from "@/types/deliveryTypes";
+
+export async function calculateDelivery(userId:string, token: string): Promise<Delivery[]>{
     const response = await fetch(`${process.env.NEXT_PUBLIC_URL_API}/delivery`, {
         method: 'GET',
         headers: {
@@ -11,6 +13,5 @@ export async function calculateDelivery(userId:string, token: string){
     });
 
     if(!response.ok) throw new Error("Can't calculate deliveries!");
-
     return await response.json();
 }
