@@ -1,6 +1,7 @@
+import { PixType } from "@/types/paymentType";
 import { generateToken } from "./cardTokenService";
 
-export async function pix(token: string, userId: string, orderId: string) {
+export async function pixCreate(token: string, userId: string, orderId: string): Promise<PixType> {
     const response = await fetch(`${process.env.NEXT_PUBLIC_URL_API}/pay/pix`, {
         method: 'POST',
         headers: {
