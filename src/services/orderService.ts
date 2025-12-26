@@ -1,4 +1,6 @@
-export async function createOrder(userId: string, token: string, deliveryOption: number){
+import { OrderType } from "@/types/orderType";
+
+export async function createOrder(userId: string, token: string, deliveryOption: number): Promise<OrderType>{
     const response = await fetch(`${process.env.NEXT_PUBLIC_URL_API}/order`, {
         method: 'POST',
         headers: {
