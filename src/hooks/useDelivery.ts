@@ -1,8 +1,9 @@
 import { calculateDelivery } from "@/services/deliveryService";
+import { Delivery } from "@/types/deliveryTypes";
 import { useState } from "react";
 
-export async function useDelivery(){
-    const [delivery, setDelivery] = useState(null);
+export function useDelivery(){
+    const [delivery, setDelivery] = useState<Delivery[] | null>(null);
     const [isLoading, setIsLoading] = useState<boolean>(false);
     const [error, setError] = useState<string | null>(null);
 
