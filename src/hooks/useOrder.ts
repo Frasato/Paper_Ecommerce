@@ -1,8 +1,10 @@
 import { createOrder, getOrdersByUser } from "@/services/orderService";
+import { OrderType } from "@/types/orderType";
 import { useState } from "react";
 
 export function useOrder(){
     const [orderList, setOrderList] = useState(null);
+    const [orderItem, setOrderItem] = useState<OrderType>();
     const [isLoading, setIsLoading] = useState<boolean>(false);
     const [error, setError] = useState<string | null>(null);
 
@@ -14,7 +16,8 @@ export function useOrder(){
             const localData = localStorage.getItem("user");
             if(!localData) throw new Error("User not found!");
             const userData = JSON.parse(localData);
-            await createOrder(userData.userId, userData.token, deliveryOption);
+            const response = await createOrder(userData.userId, userData.token, deliveryOption);
+            setOrderItem(response);
         }catch(error){
             setError("Error: " + error);
         }finally{
@@ -45,6 +48,7 @@ export function useOrder(){
         orderList,
         error,
         isLoading,
+        orderItem,
         order,
         allOrders,
         clearError
