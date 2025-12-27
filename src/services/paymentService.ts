@@ -1,5 +1,4 @@
 import { PixType } from "@/types/paymentType";
-import { generateToken } from "./cardTokenService";
 
 export async function pixCreate(token: string, userId: string, orderId: string): Promise<PixType> {
     const response = await fetch(`${process.env.NEXT_PUBLIC_URL_API}/pay/pix`, {
@@ -18,22 +17,17 @@ export async function pixCreate(token: string, userId: string, orderId: string):
     return await response.json();
 }
 
-export async function card(
+export async function cardCreate(
     token: string,
     userId: string,
     orderId: string,
     installments: number,
-    paymentMethod: string,
     cardNumber: string,
     expirationMonth: string,
     expirationYear: string,
     securityCode: string,
     cardHolderName: string,
-    documentType: string,
-    documentNumber: string
 ) {
-
-    const cardToken = await generateToken(cardNumber, expirationMonth, expirationYear, securityCode, cardHolderName, documentType, documentNumber);
 
     const response = await fetch(`${process.env.NEXT_PUBLIC_URL_API}/pay/card`, {
         method: 'POST',
@@ -44,9 +38,12 @@ export async function card(
         body: JSON.stringify({
             "userId": userId,
             "orderId": orderId,
-            "cardToken": cardToken,
             "installments": installments,
-            "paymentMethodId": paymentMethod
+            "cardNumber": cardNumber,
+            "cardholderName": cardHolderName,
+            "expirationMonth": expirationMonth,
+            "expirationYear": expirationYear,
+            "securityCode": securityCode
         })
     });
 
