@@ -1,21 +1,28 @@
-export function getLocalStorageToken(): string{
+import { LocalStorageUser } from "@/types/userType";
+
+export function getLocalStorageUser(): LocalStorageUser {
     const localUser = localStorage.getItem('user');
 
-    if(!localUser){
-        throw new Error("User not found!");
+    if (!localUser) {
+        throw new Error('User not found!');
     }
 
-    const user = JSON.parse(localUser);
-    return user.token;
-}
+    let parsed: unknown;
 
-export function getLocalStorageUserId(): string{
-    const localUser = localStorage.getItem('user');
-
-    if(!localUser){
-        throw new Error("User not found!");
+    try {
+        parsed = JSON.parse(localUser);
+    } catch {
+        throw new Error('Invalid JSON in localStorage');
     }
 
-    const user = JSON.parse(localUser);
-    return user.userId;
+    if (
+        typeof parsed !== 'object' ||
+        parsed === null ||
+        !('userId' in parsed) ||
+        !('token' in parsed)
+    ) {
+        throw new Error('Invalid user shape in localStorage');
+    }
+
+    return parsed as LocalStorageUser;
 }
