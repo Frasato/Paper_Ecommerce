@@ -4,11 +4,12 @@ import { FaShoppingCart } from "react-icons/fa";
 import { IoPersonCircle } from "react-icons/io5";
 import logo from "@/assets/icon.png";
 import Image from "next/image";
-import "@/styles/header.scss";
+import "../styles/header.scss";
 import { useCart } from "@/hooks/useCart";
 import { useEffect, useState } from "react";
-import { getLocalStorageToken, getLocalStorageUserId } from "@/utils/getLocalStorage";
+import { getLocalStorageUser } from "@/utils/getLocalStorage";
 import { TiThMenu } from "react-icons/ti";
+import { LocalStorageUser } from "@/types/userType";
 
 export default function Header() {
     const router = useRouter();
@@ -16,10 +17,9 @@ export default function Header() {
     const [isMenuOpen, setIsMenuOpen] = useState(false);
 
     useEffect(() => {
-        const userId = getLocalStorageUserId();
-        const token = getLocalStorageToken();
+        const localUser: LocalStorageUser = getLocalStorageUser();
 
-        void getCart(userId, token);
+        void getCart(localUser.userId, localUser.token);
     }, []);
 
     const toggleMenu = () => {
