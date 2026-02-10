@@ -10,12 +10,12 @@ export function useProducts(): useProductProps{
     const [isLoading, setIsLoading] = useState<boolean>(false);
     const [error, setError] = useState<string | null>(null);
 
-    const allProducts = async (token: string) =>{
+    const allProducts = async () =>{
         setIsLoading(true);
         setError(null);
 
         try{
-            const products = await getAllProducts(token);
+            const products = await getAllProducts();
             setProductList(products);
         }catch(err){
             setError(`Error on get products: ${err}`);
@@ -24,12 +24,12 @@ export function useProducts(): useProductProps{
         }
     }
 
-    const productById = async (id: string, token: string) =>{
+    const productById = async (id: string) =>{
         setIsLoading(true);
         setError(null);
 
         try{
-            const productFound = await getProductById(id, token);
+            const productFound = await getProductById(id);
             setProduct(productFound);
         }catch(err){
             setError(`Error on get product on id: ${id} | ${err}`);
@@ -38,12 +38,12 @@ export function useProducts(): useProductProps{
         }
     }
 
-    const productsByCategory = async (category: string, token: string) =>{
+    const productsByCategory = async (category: string) =>{
         setIsLoading(true);
         setError(null);
 
         try{
-            const productsFound = await getProductByCategory(category, token);
+            const productsFound = await getProductByCategory(category);
             setCategoryProducts(productsFound);
         }catch(err){
             setError(`Error on get product on category: ${category} | ${err}`);
@@ -52,12 +52,12 @@ export function useProducts(): useProductProps{
         }
     }
 
-    const productsByPurchase = async (token: string) =>{
+    const productsByPurchase = async () =>{
         setIsLoading(true);
         setError(null);
 
         try{
-            const productsFound = await getPurchaseProducts(token);
+            const productsFound = await getPurchaseProducts();
             setPurchaseProducts(productsFound);
         }catch(err){
             setError(`Error on get products purchase | ${err}`);
