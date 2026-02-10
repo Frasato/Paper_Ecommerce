@@ -1,12 +1,10 @@
 "use client";
 import { useCart } from "@/hooks/useCart";
 import { useProducts } from "@/hooks/useProducts"
-import { getLocalStorageToken } from "@/utils/getLocalStorage";
+import { getLocalStorageUser } from "@/utils/getLocalStorage";
 import { useEffect } from "react";
 import { FaTrash } from "react-icons/fa";
 import "@/styles/cartProductCard.scss";
-
-const token = getLocalStorageToken();
 
 export default function CartProductCard(props: { productId: string, quantity: number, cartItemId: string}){
     const { removeItem, minusOne, plusOne } = useCart();
@@ -14,7 +12,7 @@ export default function CartProductCard(props: { productId: string, quantity: nu
 
     useEffect(()=>{
         const productId = props.productId;
-        void productById(productId, token);
+        void productById(productId);
     },[]);
 
     return(
@@ -41,14 +39,14 @@ export default function CartProductCard(props: { productId: string, quantity: nu
                     <div className="quantity-controls">
                         <button 
                             className="quantity-button"
-                            onClick={() => minusOne(props.cartItemId, token)}
+                            onClick={() => minusOne(props.cartItemId)}
                         >
                             -
                         </button>
                         <span className="quantity-display">{props.quantity}</span>
                         <button 
                             className="quantity-button"
-                            onClick={() => plusOne(props.cartItemId, token)}
+                            onClick={() => plusOne(props.cartItemId)}
                         >
                             +
                         </button>
@@ -56,7 +54,7 @@ export default function CartProductCard(props: { productId: string, quantity: nu
                     
                     <button 
                         className="remove-button"
-                        onClick={() => removeItem(props.cartItemId, token)}
+                        onClick={() => removeItem(props.cartItemId)}
                         aria-label="Remover item"
                     >
                         <FaTrash />
