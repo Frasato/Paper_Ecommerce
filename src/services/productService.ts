@@ -1,11 +1,15 @@
 import { Product } from "@/types/productType";
+import { LocalStorageUser } from "@/types/userType";
+import { getLocalStorageUser } from "@/utils/getLocalStorage";
 
-export async function getAllProducts(token: string): Promise<Product[]>{
+export async function getAllProducts(): Promise<Product[]>{
+    const localUser: LocalStorageUser = getLocalStorageUser();
+
     const response = await fetch(`${process.env.NEXT_PUBLIC_URL_API}/product`, {
         method: "GET",
         headers: {
             "Content-Type":"application/json",
-            "Authorization":`Bearer ${token}`
+            "Authorization":`Bearer ${localUser.token}`
         }
     });
 
@@ -17,12 +21,14 @@ export async function getAllProducts(token: string): Promise<Product[]>{
     throw new Error("Products not found!");
 }
 
-export async function getProductById(id: string, token: string): Promise<Product>{
+export async function getProductById(id: string): Promise<Product>{
+    const localUser: LocalStorageUser = getLocalStorageUser();
+
     const response = await fetch(`${process.env.NEXT_PUBLIC_URL_API}/product/${id}`, {
         method: "GET",
         headers: {
             "Content-Type":"application/json",
-            "Authorization":`Bearer ${token}`
+            "Authorization":`Bearer ${localUser.token}`
         }
     });
 
@@ -34,12 +40,14 @@ export async function getProductById(id: string, token: string): Promise<Product
     throw new Error(`Product not found on id: ${id}`);
 }
 
-export async function getProductByCategory(category: string, token: string): Promise<Product[]>{
+export async function getProductByCategory(category: string): Promise<Product[]>{
+    const localUser: LocalStorageUser = getLocalStorageUser();
+
     const response = await fetch(`${process.env.NEXT_PUBLIC_URL_API}/product/cat/${category}`, {
         method: "GET",
         headers: {
             "Content-Type":"application/json",
-            "Authorization":`Bearer ${token}`
+            "Authorization":`Bearer ${localUser.token}`
         }
     });
 
@@ -51,12 +59,14 @@ export async function getProductByCategory(category: string, token: string): Pro
     throw new Error(`Products not found on category: ${category}`);
 }
 
-export async function getPurchaseProducts(token: string): Promise<Product[]>{
+export async function getPurchaseProducts(): Promise<Product[]>{
+    const localUser: LocalStorageUser = getLocalStorageUser();
+
     const response = await fetch(`${process.env.NEXT_PUBLIC_URL_API}/product/purchase`, {
         method: "GET",
         headers: {
             "Content-Type":"application/json",
-            "Authorization":`Bearer ${token}`
+            "Authorization":`Bearer ${localUser.token}`
         }
     });
 
