@@ -23,7 +23,6 @@ export interface ProductProps{
     price: number;
     priceWithDiscount: number;
     userId: string;
-    token: string;
 }
 
 export interface useProductProps{
@@ -33,9 +32,9 @@ export interface useProductProps{
     purchaseProducts: Product[] | null;
     isLoading: boolean;
     error: string | null;
-    allProducts: (token: string) => Promise<void>;
-    productById: (id: string, token: string) => Promise<void>;
-    productsByCategory: (category: string, token: string) => Promise<void>;
-    productsByPurchase: (token: string) => Promise<void>;
+    allProducts: () => Promise<void>;
+    productById: (id: string) => Promise<void>;
+    productsByCategory: (category: string) => Promise<void>;
+    productsByPurchase: () => Promise<void>;
     clearError: () => void;
 }
