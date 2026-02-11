@@ -2,10 +2,10 @@ import { Cart } from "@/types/cartType";
 import { LocalStorageUser } from "@/types/userType";
 import { getLocalStorageUser } from "@/utils/getLocalStorage";
 
-export async function getUserCart(userId: string): Promise<Cart>{
+export async function getUserCart(): Promise<Cart>{
     const localUser: LocalStorageUser = getLocalStorageUser();
 
-    const response = await fetch(`${process.env.NEXT_PUBLIC_URL_API}/cart/${userId}`, {
+    const response = await fetch(`${process.env.NEXT_PUBLIC_URL_API}/cart/${localUser.userId}`, {
         method: "GET",
         headers: {
             'Content-Type':"application/json",
@@ -18,10 +18,10 @@ export async function getUserCart(userId: string): Promise<Cart>{
         return data;
     }
 
-    throw new Error(`Failed to load cart by user with id: ${userId}`)
+    throw new Error(`Failed to load cart by user with id: ${localUser.userId}`)
 }
 
-export async function addItemOnCart(productId: string, userId: string){
+export async function addItemOnCart(productId: string){
     const localUser: LocalStorageUser = getLocalStorageUser();
 
     try{
@@ -32,7 +32,7 @@ export async function addItemOnCart(productId: string, userId: string){
                 "Authorization":`Bearer ${localUser.token}`
             },
             body: JSON.stringify({
-                userId: userId,
+                userId: localUser.userId,
                 productId: productId
             })
         });

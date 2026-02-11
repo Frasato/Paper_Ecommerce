@@ -7,12 +7,12 @@ export function useCart(){
     const [isLoading, setIsLoading] = useState<boolean>(false);
     const [error, setError] = useState<string | null>(null);
 
-    const getCart = async (userId: string) => {
+    const getCart = async () => {
         setIsLoading(true);
         setError(null);
 
         try{
-            const response = await getUserCart(userId);
+            const response = await getUserCart();
             setCart(response);
         }catch(err){
             setError(`Failed to load cart for user | ${err}`);
@@ -21,12 +21,12 @@ export function useCart(){
         }
     }
 
-    const addItem = async (productId: string, userId: string) =>{
+    const addItem = async (productId: string) =>{
         setIsLoading(true);
         setError(null);
 
         try{
-            await addItemOnCart(productId, userId);
+            await addItemOnCart(productId);
         }catch(err){
             setError(`Failed to add item to cart, product id: ${productId} | ${err}`);
         }finally{

@@ -1,16 +1,11 @@
 "use client";
-
 import CartProductCard from "@/components/cartProductCard";
 import Header from "@/components/header";
 import { useCart } from "@/hooks/useCart";
-import { getLocalStorageToken, getLocalStorageUserId } from "@/utils/getLocalStorage";
 import { useEffect, useState } from "react";
 import "@/styles/cartPage.scss";
 import Link from "next/link";
 import { useProducts } from "@/hooks/useProducts";
-
-const userId = getLocalStorageUserId();
-const token = getLocalStorageToken();
 
 export default function Cart() {
     const { isLoading, cart, getCart } = useCart();
@@ -19,7 +14,7 @@ export default function Cart() {
     const [productMap, setProductMap] = useState<Record<string, unknown>>({});
 
     useEffect(() => {
-        void getCart(userId, token);
+        void getCart();
     }, []);
 
     useEffect(() => {
@@ -31,7 +26,7 @@ export default function Cart() {
             for (const item of cart.cartItem) {
                 const id = item.product.id || item.product;
                 if (!productMap[id]) {
-                    const fullProduct = await productById(id, token);
+                    const fullProduct = await productById(id);
                     newProductMap[id] = fullProduct;
                 }
             }
