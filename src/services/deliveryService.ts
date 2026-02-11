@@ -1,14 +1,18 @@
 import { Delivery } from "@/types/deliveryTypes";
+import { LocalStorageUser } from "@/types/userType";
+import { getLocalStorageUser } from "@/utils/getLocalStorage";
 
-export async function calculateDelivery(userId:string, token: string): Promise<Delivery[]>{
+export async function calculateDelivery(): Promise<Delivery[]>{
+    const localUser: LocalStorageUser = getLocalStorageUser();
+
     const response = await fetch(`${process.env.NEXT_PUBLIC_URL_API}/delivery`, {
         method: 'GET',
         headers: {
             'Content-Type':'application/json',
-            'Authorization':`Bearer ${token}`
+            'Authorization':`Bearer ${localUser.token}`
         },
         body: JSON.stringify({
-            userId: userId
+            userId: localUser.userId
         })
     });
 

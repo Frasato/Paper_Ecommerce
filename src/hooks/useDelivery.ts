@@ -15,7 +15,7 @@ export function useDelivery(){
             const localData = localStorage.getItem("user");
             if(!localData) throw new Error("User not found!");
             const userData = JSON.parse(localData);
-            const response = await calculateDelivery(userData.userId, userData.token);
+            const response = await calculateDelivery();
             setDelivery(response);
         }catch(error){
             setError("Error: " + error);
