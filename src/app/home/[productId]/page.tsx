@@ -1,16 +1,12 @@
 "use client";
 import Header from "@/components/header";
 import { useProducts } from "@/hooks/useProducts";
-import { getLocalStorageToken, getLocalStorageUserId } from "@/utils/getLocalStorage";
 import { use, useEffect } from "react";
 import { FaCartPlus, FaArrowRight } from "react-icons/fa";
 import "@/styles/productPage.scss";
 import Link from "next/link";
 import ProductCard from "@/components/productCard";
 import { useCart } from "@/hooks/useCart";
-
-const token = getLocalStorageToken();
-const userId = getLocalStorageUserId();
 
 export default function ProductPage({ params }: { params: Promise<{ productId: string }> }) { 
     const { productId } = use(params)
@@ -19,11 +15,11 @@ export default function ProductPage({ params }: { params: Promise<{ productId: s
 
     useEffect(() => {
         if(productId){
-            void productById(productId, token);
+            void productById(productId);
         }
         
         if(product){
-            void productsByCategory(product?.category, token);
+            void productsByCategory(product?.category);
         }
     }, [productId, product?.category]);
 
@@ -62,7 +58,7 @@ export default function ProductPage({ params }: { params: Promise<{ productId: s
                                 </div>
                                 
                                 <div className="action-buttons">
-                                    <button className="btn btn-cart" onClick={() => addItem(productId, userId, token)}>
+                                    <button className="btn btn-cart" onClick={() => addItem(productId)}>
                                         <FaCartPlus />
                                         Adicionar ao Carrinho
                                     </button>
