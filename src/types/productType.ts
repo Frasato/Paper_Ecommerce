@@ -22,7 +22,6 @@ export interface ProductProps{
     description: string;
     price: number;
     priceWithDiscount: number;
-    userId: string;
 }
 
 export interface useProductProps{
