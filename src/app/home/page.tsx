@@ -2,22 +2,18 @@
 import Header from "@/components/header";
 import ProductCard from "@/components/productCard";
 import { useProducts } from "@/hooks/useProducts";
-import { getLocalStorageToken, getLocalStorageUserId } from "@/utils/getLocalStorage";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import banner from "@/assets/banner.jpg";
 import Image from "next/image";
 import "@/styles/home.scss";
 import Link from "next/link";
 
-const token = getLocalStorageToken();
-const userId =getLocalStorageUserId();
-
 export default function Home() {
     const { purchaseProducts, productsList, allProducts, productsByPurchase, isLoading } = useProducts();
 
     useEffect(() => {
-        void allProducts(token);
-        void productsByPurchase(token);
+        void allProducts();
+        void productsByPurchase();
     }, []);
 
     if(isLoading) {
@@ -45,8 +41,6 @@ export default function Home() {
                         {purchaseProducts && purchaseProducts?.length > 0 && purchaseProducts?.map((product, index) => (
                             <Link href={`/home/${product.id}`} key={index}>
                                 <ProductCard
-                                    token={token}
-                                    userId={userId}
                                     {...product}
                                 />
                             </Link>
@@ -60,8 +54,6 @@ export default function Home() {
                         {productsList && productsList?.length > 0 && productsList?.map((product, index) => (
                             <Link href={`/home/${product.id}`} key={index}>
                                 <ProductCard
-                                    token={token}
-                                    userId={userId}
                                     {...product}
                                 />
                             </Link>
