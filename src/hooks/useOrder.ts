@@ -16,7 +16,7 @@ export function useOrder(){
             const localData = localStorage.getItem("user");
             if(!localData) throw new Error("User not found!");
             const userData = JSON.parse(localData);
-            const response = await createOrder(userData.userId, userData.token, deliveryOption);
+            const response = await createOrder(deliveryOption);
             setOrderItem(response);
         }catch(error){
             setError("Error: " + error);
@@ -33,7 +33,7 @@ export function useOrder(){
             const localData = localStorage.getItem("user");
             if(!localData) throw new Error("User not found!");
             const userData = JSON.parse(localData);
-            const orderData = await getOrdersByUser(userData.userId, userData.token);
+            const orderData = await getOrdersByUser();
             setOrderList(orderData);
         }catch(error){
             setError("Error: " + error);

@@ -1,14 +1,18 @@
 import { OrderType } from "@/types/orderType";
+import { LocalStorageUser } from "@/types/userType";
+import { getLocalStorageUser } from "@/utils/getLocalStorage";
 
-export async function createOrder(userId: string, token: string, deliveryOption: number): Promise<OrderType>{
+export async function createOrder(deliveryOption: number): Promise<OrderType>{
+    const localUser: LocalStorageUser = getLocalStorageUser();
+
     const response = await fetch(`${process.env.NEXT_PUBLIC_URL_API}/order`, {
         method: 'POST',
         headers: {
             'Content-Type':'application/json',
-            'Authentication':`Bearer ${token}`
+            'Authentication':`Bearer ${localUser.token}`
         },
         body: JSON.stringify({
-            'userId': userId,
+            'userId': localUser.userId,
             'deliveryOption': deliveryOption
         })
     });
@@ -17,12 +21,14 @@ export async function createOrder(userId: string, token: string, deliveryOption:
     return await response.json();
 }
 
-export async function getOrdersByUser(userId: string, token: string){
-    const response = await fetch(`${process.env.NEXT_PUBLIC_URL_API}/order/user/${userId}`, {
+export async function getOrdersByUser(){
+    const localUser: LocalStorageUser = getLocalStorageUser();
+
+    const response = await fetch(`${process.env.NEXT_PUBLIC_URL_API}/order/user/${localUser.userId}`, {
         method: 'GET',
         headers: {
             'Content-Type':'application/json',
-            'Authentication':`Bearer ${token}`
+            'Authentication':`Bearer ${localUser.token}`
         }
     });
 
