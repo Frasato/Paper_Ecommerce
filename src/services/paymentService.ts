@@ -1,14 +1,18 @@
 import { PixType } from "@/types/paymentType";
+import { LocalStorageUser } from "@/types/userType";
+import { getLocalStorageUser } from "@/utils/getLocalStorage";
 
-export async function pixCreate(token: string, userId: string, orderId: string): Promise<PixType> {
+export async function pixCreate(orderId: string): Promise<PixType> {
+    const localUser: LocalStorageUser = getLocalStorageUser();
+
     const response = await fetch(`${process.env.NEXT_PUBLIC_URL_API}/pay/pix`, {
         method: 'POST',
         headers: {
             'Content-Type':'application/json',
-            'Authentication':`Bearer ${token}`
+            'Authentication':`Bearer ${localUser.token}`
         },
         body: JSON.stringify({
-            'userId': userId,
+            'userId': localUser.userId,
             'orderId': orderId
         })
     });
@@ -18,8 +22,6 @@ export async function pixCreate(token: string, userId: string, orderId: string):
 }
 
 export async function cardCreate(
-    token: string,
-    userId: string,
     orderId: string,
     installments: number,
     cardNumber: string,
@@ -28,15 +30,16 @@ export async function cardCreate(
     securityCode: string,
     cardHolderName: string,
 ) {
+    const localUser: LocalStorageUser = getLocalStorageUser();
 
     const response = await fetch(`${process.env.NEXT_PUBLIC_URL_API}/pay/card`, {
         method: 'POST',
         headers: {
             'Content-Type':'application/json',
-            'Authentication':`Bearer ${token}`
+            'Authentication':`Bearer ${localUser.token}`
         },
         body: JSON.stringify({
-            "userId": userId,
+            "userId": localUser.userId,
             "orderId": orderId,
             "installments": installments,
             "cardNumber": cardNumber,

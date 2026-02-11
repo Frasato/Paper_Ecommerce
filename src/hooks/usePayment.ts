@@ -13,10 +13,7 @@ export function usePayment(){
         setError(null);
 
         try{
-            const localData = localStorage.getItem("user");
-            if(!localData) throw new Error("User not found!");
-            const userData = JSON.parse(localData);
-            const response = await pixCreate(userData.token, userData.userId, orderId);
+            const response = await pixCreate(orderId);
             setPix(response);
         }catch(error){
             setError("Error: " + error);
@@ -38,10 +35,7 @@ export function usePayment(){
         setError(null);
 
         try{
-            const localData = localStorage.getItem("user");
-            if(!localData) throw new Error("User not found!");
-            const userData = JSON.parse(localData);
-            const response = await cardCreate(userData.token, userData.userId, orderId, installments, cardNumber, expirationMonth, expirationYear, securityCode, cardHolderName);
+            const response = await cardCreate(orderId, installments, cardNumber, expirationMonth, expirationYear, securityCode, cardHolderName);
             setCard(response);
         }catch(error){
             setError("Error: " + error);
