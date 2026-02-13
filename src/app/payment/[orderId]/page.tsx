@@ -1,4 +1,5 @@
 import { usePayment } from "@/hooks/usePayment";
+import { useRouter } from "next/router";
 import { ChangeEvent, use, useState } from "react"
 
 export default function page({param} : {param: Promise<{ orderId: string }>}){
@@ -12,6 +13,7 @@ export default function page({param} : {param: Promise<{ orderId: string }>}){
     const [expYear, setExpYear] = useState<string>("");
     const [securityCode, setSecurityCode] = useState<string>("");
     const [installments, setInstallments] = useState<string>("");
+    const router = useRouter();
 
     const handlerExpiration = (e:ChangeEvent<HTMLInputElement>) =>{
         let value = e.target.value;
@@ -52,6 +54,13 @@ export default function page({param} : {param: Promise<{ orderId: string }>}){
             expYear,
             securityCode,
             cardHold,
+        );
+
+        return (
+            <div>
+                {card}
+                <button onClick={() => router.push('/home')}>OK</button>
+            </div>
         )
     }
 
@@ -106,13 +115,10 @@ export default function page({param} : {param: Promise<{ orderId: string }>}){
                         <input type="text" placeholder="Validade" maxLength={4} onChange={(e)=> handlerExpiration(e)}/>
                         <input type="text" placeholder="Código de segurança" maxLength={3} onChange={(e)=> setSecurityCode(e.target.value)}/>
                         <input type="text" placeholder="Número de parcelas" onChange={(e)=> setInstallments(e.target.value)}/>
+                        <button onClick={createCardPayment}>Confirmar</button>
                     </div>
                 )
             }
         </main>
     )
-}
-
-function async() {
-    throw new Error("Function not implemented.");
 }
