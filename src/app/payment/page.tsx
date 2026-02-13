@@ -7,7 +7,7 @@ import { useEffect, useState } from "react";
 export default function page(){
 
     const {order, orderItem} = useOrder();
-    const { isLoading,  error, delivery, deliveryOptions, clearError} = useDelivery();
+    const { isLoading,  error, delivery, deliveryOptions } = useDelivery();
     const router = useRouter();
     const [option, setOption] = useState<string>();
 
